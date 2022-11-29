@@ -1,6 +1,6 @@
 """Calculates a relative hand ranking for traditional poker hands"""
 # Derived from https://github.com/megacolorboy/ProjectEuler/blob/master/poker_lib.py
-import pydealer
+from pydealer import tools, Stack
 
 class HandAnalyzer:
 
@@ -10,7 +10,7 @@ class HandAnalyzer:
     def __init__(self) -> None:
         pass
     
-    def calculate(self, hand):
+    def calculate(self, hand: Stack):
         rankOrder = [
             self._royalFlush,
             self._straightFlush,
@@ -24,27 +24,30 @@ class HandAnalyzer:
             self._highCard
         ]
         for rank in rankOrder:
-            rank = rank(pydealer.tools.sort_cards(hand))
+            r = rank(tools.sort_cards(hand))
 
-            if rank:
+            if r:
                 break
 
-        return rank
+        return r
 
-    def _royalFlush(self, hand):
+    def winningHand(results):
+        pass
+
+    def _royalFlush(self, hand: Stack):
         royalValue = '10JackQueenKingAce'
         if all(hand[0].suit == card.suit for card in hand[1:]):
             if ''.join(card.value for card in hand) in royalValue:
-                return 'royal-flush', hand[-1].value
+                return 'a-royal-flush', hand[-1].value
         return False
 
-    def _straightFlush(self, hand):
+    def _straightFlush(self, hand: Stack):
         if all(hand[0].suit == card.suit for card in hand[1:]):
             if ''.join(card.value for card in hand) in ''.join(self.ranksList):
-                return 'straight-flush', hand[-1].value
+                return 'a-straight-flush', hand[-1].value
         return False
 
-    def _fourOfAKind(self, hand):
+    def _fourOfAKind(self, hand: Stack):
         handValues = [card.value for card in hand]
         uniqueHandRanks = set(handValues)
 
@@ -60,7 +63,7 @@ class HandAnalyzer:
 
         return False
 
-    def _fullHouse(self, hand):
+    def _fullHouse(self, hand: Stack):
         handValues = [card.value for card in hand]
 
         rankFrequency = {}
@@ -71,28 +74,28 @@ class HandAnalyzer:
                 rankFrequency[value] = 1
 
         # if there are 2 types of ranks and there's a card with 1 pair and 3 of a kind
-        if len(rankFrequency) == 2 and (rankFrequency.values()[0] == 2 and rankFrequency.values()[1] == 3):
-            return 'full-house'
+        if len(rankFrequency) == 2 and (list(rankFrequency.values())[0] == 2 and list(rankFrequency.values())[1] == 3):
+            return 'a-full-house'
 
         return False
 
-    def _flush(self, hand):
+    def _flush(self, hand: Stack):
         handValues = [card.value for card in hand]
 
         first_card = hand[0]
         other_cards = hand[1:]
 
         if all(hand[0].suit == card.suit for card in hand[1:]):
-            return 'flush', handValues
+            return 'a-flush', handValues
 
         return False
 
-    def _straight(self, hand):
+    def _straight(self, hand: Stack):
         if ''.join(card.value for card in hand) in ''.join(self.ranksList):
-            return 'straight', hand[-1].value
+            return 'a-straight', hand[-1].value
         return False
 
-    def _threeOfAKind(self, hand):
+    def _threeOfAKind(self, hand: Stack):
         handValues = [card.value for card in hand]
         uniqueHandRanks = set(handValues)
 
@@ -106,7 +109,7 @@ class HandAnalyzer:
 
         return False
 
-    def _twoPair(self, hand):
+    def _twoPair(self, hand: Stack):
         handValues = [card.value for card in hand]
         uniqueHandRanks = set(handValues)
         
@@ -118,7 +121,7 @@ class HandAnalyzer:
             return False
         return 'two-pair', pairs
 
-    def _onePair(self, hand):
+    def _onePair(self, hand: Stack):
         handValues = [card.value for card in hand]
         uniqueHandRanks = set(handValues)
 
@@ -130,5 +133,5 @@ class HandAnalyzer:
             return False
         return 'one-pair', pairs
 
-    def _highCard(self, hand):
+    def _highCard(self, hand: Stack):
         return "high-card", hand[0].value

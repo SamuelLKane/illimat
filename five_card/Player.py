@@ -1,23 +1,27 @@
-import pydealer
+from pydealer import Stack, Card
 class Player:
     id: int = None
-    hand = pydealer.Stack()
+    hand = Stack()
     validPositions = [0,1,2,3,4]
 
-    def __init__(self, id, cards) -> None:
+    def __init__(self, id: int, cards: Stack) -> None:
         self.id = id
         self.hand = cards
 
     def getHand(self):
         return self.hand
     
-    def swapCard(self, oldCard, newCard, position):
+    def swapCard(self, newCard:Card, position: int):
         """Discard a card and Replace it with another from the deck"""
-        if position not in self.validPositions:
+        if position >= 5 or position < 0:
+            print("Invalid Position, please input a number between 0 and 4")
+            return
+        if self.validPositions[position] == -1:
             print("Invalid Position, please select another card")
             return
-        del self.hand[self.hand.find(f"{oldCard.value} of {oldCard.suit}")[0]]
-        del self.validPositions[position]
+        del self.hand[0]
+        self.validPositions[position] = -1
+        #? Check that this correctly inserts the card at the right position
         self.hand.insert(newCard[0], position)
         
 
