@@ -44,7 +44,9 @@ if __name__ == "__main__":
                 pass
                 playRound(player)
             else:
-                PlayerSimulator.simulatePlayer(player, deck, 'easy')
+                inputDiff = input("Choose a difficulty for this player:\n1 - easy\n2 - medium\n3 - hard\n")
+                print(inputDiff)
+                PlayerSimulator.simulatePlayer(player, deck, inputDiff)
             
     except RoundTimer.TimeoutError:
         print("\nRound is over")
