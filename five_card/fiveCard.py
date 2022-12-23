@@ -11,15 +11,12 @@ players = []
 @RoundTimer.timeout(60)
 def playRound(player: Player):
     print("Beginning round...")
-
-    playerHand = player.getHand()
-    print(f"Your Hand:\n{playerHand}")
-
+    
     count = 0
     while True:
+        print(f"Your Hand:\n{player.getHumanReadableHand()}")
         cardPosition = int(input("Which card would you like to discard?"))
         player.swapCard(deck.deal(1), cardPosition)
-        print(f"Your Hand:\n{playerHand}")
         count += 1
         if count == 5:
             break
