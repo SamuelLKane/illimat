@@ -1,4 +1,8 @@
 import pydealer
+import threading
+import random
+from time import sleep
+from typing import List
 
 from Player import Player
 from HandAnalyzer import HandAnalyzer
@@ -20,6 +24,33 @@ def playRound(player: Player):
         count += 1
         if count == 5:
             break
+    
+
+@RoundTimer.timeout(60)
+def playThreadedRound(players: List[Player], difficulty: str):
+    print("Playing threaded Round")
+
+    threads = []
+    for i, player in enumerate(players):
+        if i == 0:
+            t = threading.Thread(target=playHumanHand, args=[player])
+        else:
+            t = threading.Thread(target=PlayerSimulator.simulatePlayer, args=[player, deck, difficulty])
+        t.start()
+        threads.append(t)
+    
+    [thread.join() for thread in threads]
+
+def playHumanHand(player: Player):
+    count = 0
+    while True:
+        print(f"Your Hand:\n{player.getHumanReadableHand()}")
+        cardPosition = int(input("Which card would you like to discard?"))
+        player.swapCard(deck.deal(1), cardPosition)
+        count += 1
+        if count == 5:
+            break
+
 
 if __name__ == "__main__":
     print("---- Five Card Draw ----")
@@ -34,17 +65,9 @@ if __name__ == "__main__":
     print("Dealing Players In...")
     players = [Player(playerId, deck.deal(5)) for playerId in range(numberOfPlayers)]
     
+    difficulty = input("Choose a difficulty for this player:\n1 - easy\n2 - medium\n3 - hard\n")
     try:
-        # TODO: Thread this and move to playRound method so they are both wrapped in the timer
-        for i, player in enumerate(players):
-            if i == 0:
-                pass
-                playRound(player)
-            else:
-                inputDiff = input("Choose a difficulty for this player:\n1 - easy\n2 - medium\n3 - hard\n")
-                print(inputDiff)
-                PlayerSimulator.simulatePlayer(player, deck, inputDiff)
-            
+        playThreadedRound(players, difficulty)            
     except RoundTimer.TimeoutError:
         print("\nRound is over")
 

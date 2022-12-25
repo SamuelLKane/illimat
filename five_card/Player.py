@@ -1,4 +1,8 @@
 from pydealer import Stack, Card
+from time import sleep
+
+import random
+
 class Player:
     id: int = None
     hand = Stack()
