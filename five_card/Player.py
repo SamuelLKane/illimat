@@ -1,7 +1,4 @@
 from pydealer import Stack, Card
-from time import sleep
-
-import random
 
 class Player:
     id: int = None
@@ -32,6 +29,7 @@ class Player:
         if self.validPositions[position] == -1:
             print("Invalid Position, please select another card")
             return
+        #! Somehow multiple positions are getting set to -1
         self.validPositions[position] = -1
         self.hand.insert(newCard[0], position)
         del self.hand[position + 1]
@@ -42,5 +40,5 @@ class Player:
             'id': self.id,
             'size': len(self.getHand()),
             'validOptions': self.validPositions,
-            'hand': self.getHand()
+            'hand': [card for card in self.getHand()]
         }

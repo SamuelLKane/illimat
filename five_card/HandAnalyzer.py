@@ -81,10 +81,6 @@ class HandAnalyzer:
 
     def _flush(self, hand: Stack):
         handValues = [card.value for card in hand]
-
-        first_card = hand[0]
-        other_cards = hand[1:]
-
         if all(hand[0].suit == card.suit for card in hand[1:]):
             return 'a-flush', handValues
 

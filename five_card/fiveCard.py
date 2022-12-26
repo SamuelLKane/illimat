@@ -1,7 +1,5 @@
 import pydealer
 import threading
-import random
-from time import sleep
 from typing import List
 
 from Player import Player
@@ -13,25 +11,12 @@ deck = None
 players = []
 
 @RoundTimer.timeout(60)
-def playRound(player: Player):
-    print("Beginning round...")
-    
-    count = 0
-    while True:
-        print(f"Your Hand:\n{player.getHumanReadableHand()}")
-        cardPosition = int(input("Which card would you like to discard?"))
-        player.swapCard(deck.deal(1), cardPosition)
-        count += 1
-        if count == 5:
-            break
-    
-
-@RoundTimer.timeout(60)
 def playThreadedRound(players: List[Player], difficulty: str):
     print("Playing threaded Round")
 
     threads = []
     for i, player in enumerate(players):
+        t = None
         if i == 0:
             t = threading.Thread(target=playHumanHand, args=[player])
         else:
