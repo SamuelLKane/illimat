@@ -1,10 +1,13 @@
 import sys
+import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap, QPainter
 from PyQt5.QtCore import Qt
 
 from pydealer import Deck, Card
 from HandAnalyzer import HandAnalyzer
+
+basedir = os.path.dirname(__file__)
 
 class CardButton(QAbstractButton):
     def __init__(self, pixmap: QPixmap, parent=None):
@@ -39,11 +42,11 @@ class MainWindow(QMainWindow):
                 pngCodes.append(f"{card.value[0]}{card.suit[0]}")
 
         # Cards as Buttons
-        self.card0Button = CardButton(QPixmap(f"GUI/card_images/{pngCodes[0]}.png"),self)
-        self.card1Button = CardButton(QPixmap(f"GUI/card_images/{pngCodes[1]}.png"),self)
-        self.card2Button = CardButton(QPixmap(f"GUI/card_images/{pngCodes[2]}.png"),self)
-        self.card3Button = CardButton(QPixmap(f"GUI/card_images/{pngCodes[3]}.png"),self)
-        self.card4Button = CardButton(QPixmap(f"GUI/card_images/{pngCodes[4]}.png"),self)
+        self.card0Button = CardButton(QPixmap(f"{basedir}/GUI/card_images/{pngCodes[0]}.png"),self)
+        self.card1Button = CardButton(QPixmap(f"{basedir}/GUI/card_images/{pngCodes[1]}.png"),self)
+        self.card2Button = CardButton(QPixmap(f"{basedir}/GUI/card_images/{pngCodes[2]}.png"),self)
+        self.card3Button = CardButton(QPixmap(f"{basedir}/GUI/card_images/{pngCodes[3]}.png"),self)
+        self.card4Button = CardButton(QPixmap(f"{basedir}/GUI/card_images/{pngCodes[4]}.png"),self)
 
         self.card0Button.clicked.connect(self.clickCard0)
         self.card1Button.clicked.connect(self.clickCard1)
@@ -99,9 +102,9 @@ class MainWindow(QMainWindow):
         self.validPositions[position] = -1
         newCard: Card = self.deck.deal(1)[0]
         if newCard.value == '10':
-            newPixmap = QPixmap(f"GUI/card_images/T{newCard.suit[0]}.png")
+            newPixmap = QPixmap(f"{basedir}/GUI/card_images/T{newCard.suit[0]}.png")
         else:
-            newPixmap = QPixmap(f"GUI/card_images/{newCard.value[0]}{newCard.suit[0]}.png")
+            newPixmap = QPixmap(f"{basedir}/GUI/card_images/{newCard.value[0]}{newCard.suit[0]}.png")
         self.hand.insert(newCard, position)
         del self.hand[position + 1]
         return newPixmap
@@ -163,23 +166,23 @@ class MainWindow(QMainWindow):
                     pngCodes.append(f"{card.value[0]}{card.suit[0]}")
 
             self.card0Button.hide()
-            self.card0Button.pixmap = QPixmap(f"GUI/card_images/{pngCodes[0]}.png")
+            self.card0Button.pixmap = QPixmap(f"{basedir}/GUI/card_images/{pngCodes[0]}.png")
             self.card0Button.show()
 
             self.card1Button.hide()
-            self.card1Button.pixmap = QPixmap(f"GUI/card_images/{pngCodes[1]}.png")
+            self.card1Button.pixmap = QPixmap(f"{basedir}/GUI/card_images/{pngCodes[1]}.png")
             self.card1Button.show()
 
             self.card2Button.hide()
-            self.card2Button.pixmap = QPixmap(f"GUI/card_images/{pngCodes[2]}.png")
+            self.card2Button.pixmap = QPixmap(f"{basedir}/GUI/card_images/{pngCodes[2]}.png")
             self.card2Button.show()
 
             self.card3Button.hide()
-            self.card3Button.pixmap = QPixmap(f"GUI/card_images/{pngCodes[3]}.png")
+            self.card3Button.pixmap = QPixmap(f"{basedir}/GUI/card_images/{pngCodes[3]}.png")
             self.card3Button.show()
 
             self.card4Button.hide()
-            self.card4Button.pixmap = QPixmap(f"GUI/card_images/{pngCodes[4]}.png")
+            self.card4Button.pixmap = QPixmap(f"{basedir}/GUI/card_images/{pngCodes[4]}.png")
             self.card4Button.show()
 
             self.confirm = True
