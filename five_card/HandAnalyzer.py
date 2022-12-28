@@ -130,4 +130,4 @@ class HandAnalyzer:
         return 'one-pair', pairs
 
     def _highCard(self, hand: Stack):
-        return "high-card", hand[0].value
+        return "high-card", hand[4].value
