@@ -7,4 +7,3 @@ GUI Upgrades:
 Big Topics
 1. Network play
 2. AI players
-3. Compiled App/Executable
