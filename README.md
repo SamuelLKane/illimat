@@ -7,4 +7,5 @@ Meant as a playground to learn a variety of skills.
 
 Included Games:
 - Five Card Draw
+- Texas Hold'em (In Development)
 - Illimat (In Development)
