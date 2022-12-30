@@ -1,4 +1,4 @@
-1. Determine best hand out of cards
+1. Determine best hand out of cards --- DONE
 2. Add Betting between rounds and at start
 3. Add highlights to the cards which are in the winning hand
 4. Add Game Start Screen

@@ -1,10 +1,12 @@
 import sys
 import os
+import itertools
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
-from pydealer import Deck, Card
+from pydealer import Deck
+from HandAnalyzer import HandAnalyzer
 
 basedir = os.path.dirname(__file__)
 
@@ -136,7 +138,20 @@ class MainWindow(QMainWindow):
         self.riverCard.show()
 
     def determineWinner(self):
-        self.resultLabel.setText("Determining Winner... no implemented :(")
+        # determine all unique 3 card combinations of the community cards
+        analyzer = HandAnalyzer()
+        bestResult = ('high-card','2') # worst possible hand
+        for combo in itertools.combinations(self.communityCards, 3):
+            [self.hand.add(c) for c in combo]
+            # create temp "hand" with hand + combo (five cards total now)
+            result = analyzer.calculate(self.hand)
+            if result > bestResult:
+                bestResult = result
+            # reset the hand back to the default state
+            del self.hand[4]
+            del self.hand[3]
+            del self.hand[2]
+        self.resultLabel.setText(f"You got {bestResult[0].replace('-',' ')} ({bestResult[1]})")
 
 app = QApplication(sys.argv)
 
