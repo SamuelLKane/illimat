@@ -1,4 +1,3 @@
-GUI Upgrades:
 1. Add Timer Feature
 2. Add Game Start Screen
 3. Add Computer Players
