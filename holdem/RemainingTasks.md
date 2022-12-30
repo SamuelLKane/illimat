@@ -4,7 +4,7 @@
 4. Add Game Start Screen
 5. Add support for multiple computer players
 6. Add game end screen
-
+7. Center window in screen
 
 Big Topics
 1. Network Play

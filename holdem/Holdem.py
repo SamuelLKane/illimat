@@ -35,7 +35,6 @@ class MainWindow(QMainWindow):
                 self.communityCardPNGCodes.append(f"{card.value[0]}{card.suit[0]}")
         self.communityCardPNGCodes.append(f"1B")
 
-        print(self.communityCardPNGCodes)
         # Hand Display
         self.handWidget = QWidget()
         self.handLayout = QHBoxLayout(self.handWidget)
@@ -108,7 +107,6 @@ class MainWindow(QMainWindow):
         self.verticalLayout.addWidget(self.buttonWidget)
         self.verticalLayout.addWidget(self.resultWidget)
 
-    
     def initializeCardData(self):
         self.deck = Deck()
         self.deck.shuffle()
@@ -138,7 +136,7 @@ class MainWindow(QMainWindow):
         self.riverCard.show()
 
     def determineWinner(self):
-        print("determineWinner!")
+        self.resultLabel.setText("Determining Winner... no implemented :(")
 
 app = QApplication(sys.argv)
 
